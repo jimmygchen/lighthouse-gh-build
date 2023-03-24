@@ -22,11 +22,11 @@ jobs:
         run: rustup update stable
       - name: Clone and run build
         run: |
-          clone_url=https://github.com/${{ github.event.inputs.fork_name }}/lighthouse.git
-          build_target=${{ github.event.inputs.build_target }}          
-          echo "Cloning from $clone_url"
-          echo "Build target: $build_target"
-          git clone $clone_url && cd lighthouse && git config advice.detachedHead false && git fetch --all --tags && if [[ ${BUILD_TARGET} =~ pr-.+ ]]; then git fetch origin pull/$(echo ${BUILD_TARGET} | cut -d '-' -f 2)/head:lh-pr; git checkout lh-pr; else git checkout ${BUILD_TARGET}; fi && make        
+          CLONE_URL=https://github.com/${{ github.event.inputs.fork_name }}/lighthouse.git
+          BUILD_TARGET=${{ github.event.inputs.build_target }}          
+          echo "Cloning from $CLONE_URL"
+          echo "Build target: $BUILD_TARGET"
+          git clone $CLONE_URL && cd lighthouse && git config advice.detachedHead false && git fetch --all --tags && if [[ ${BUILD_TARGET} =~ pr-.+ ]]; then git fetch origin pull/$(echo ${BUILD_TARGET} | cut -d '-' -f 2)/head:lh-pr; git checkout lh-pr; else git checkout ${BUILD_TARGET}; fi && make        
       - name: Upload build binary
         uses: actions/upload-artifact@v3
         with:
