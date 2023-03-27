@@ -36,9 +36,9 @@ jobs:
       - name: Clone and run build
         run: |
           CLONE_URL=https://github.com/${{ github.event.inputs.fork_name }}/lighthouse.git
-          BUILD_TARGET="${{ github.event.inputs.build_target }}"
-          CUSTOM_BUILD_COMMAND="${{ github.event.inputs.custom_build_command }}"
-          BUILD_COMMAND="${{ github.event.inputs.build_command }}"
+          BUILD_TARGET='${{ github.event.inputs.build_target }}'
+          CUSTOM_BUILD_COMMAND='${{ github.event.inputs.custom_build_command }}'
+          BUILD_COMMAND='${{ github.event.inputs.build_command }}'
           
           echo "Cloning from $CLONE_URL"
           echo "Build target: $BUILD_TARGET"
