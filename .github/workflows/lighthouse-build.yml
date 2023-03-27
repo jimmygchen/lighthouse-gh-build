@@ -43,8 +43,14 @@ jobs:
           
           echo "Cloning from $CLONE_URL"
           echo "Build target: $BUILD_TARGET"
-          echo "Build command: $COMMAND_TO_RUN"
           git clone $CLONE_URL && cd lighthouse && git config advice.detachedHead false && git fetch --all --tags && if [[ ${BUILD_TARGET} =~ pr-.+ ]]; then git fetch origin pull/$(echo ${BUILD_TARGET} | cut -d '-' -f 2)/head:lh-pr; git checkout lh-pr; else git checkout ${BUILD_TARGET}; fi
+
+          echo "Build command: $COMMAND_TO_RUN"
+          if [[ "${COMMAND_TO_RUN,,}" == *"cross"* ]]; then
+            echo "Installing cross..."
+            cargo install cross
+          fi
+          
           eval $COMMAND_TO_RUN
       - name: Upload build binary
         uses: actions/upload-artifact@v3
